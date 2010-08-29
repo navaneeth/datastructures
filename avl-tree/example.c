@@ -29,9 +29,11 @@ static void printtree(struct tree *t, unsigned int depth)
     printf("%c\n", t->element);
 }
 
-int main()
+void example1(void)
 {
     struct tree *root = NULL;
+    
+    printf("Creating simple tree with 7 elements\n");    
     root = insert(root, 'C');
     root = insert(root, 'E');
     root = insert(root, 'J');
@@ -39,26 +41,37 @@ int main()
     root = insert(root, 'O');
     root = insert(root, 'S');
     root = insert(root, 'W');
-
     tree_iterate(root, printtree);
-
-    printf("Finding element : S - ");
-    if(lookup(root, 'S')) {
-        printf("Found!\n");
-    }
-    else {
-        printf("Not found\n");
-    }
-
-    printf("Finding element : Z - ");
-    if(lookup(root, 'Z')) {
-        printf("Found!\n");
-    }
-    else {
-        printf("Not found\n");
-    }
-
+    printf("Created 7 elements with %lu bytes memory usage\n", memory_allocated());
     free_tree(root);
+}
+
+void example2(void)
+{
+    int limit = 50000, i;
+    struct tree *root = NULL;
+
+    printf("Creating tree with %d elements\n", limit);
+    for(i = 0; i < limit; i++) {
+        root = insert(root, i);
+    }
+    printf("Created %d elements with %lu bytes memory usage\n", i, memory_allocated());
+
+    printf("Finding element : 49999 - ");
+    if(lookup(root, 49999)) {
+        printf("Found!\n");
+    }
+    else {
+        printf("Not found\n");
+    }
+    free_tree(root);
+}
+
+int main()
+{
+    example1();
+    printf("-----------------------\n");
+    example2();
     return 0;
 }
 

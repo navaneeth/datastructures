@@ -25,6 +25,8 @@
 #define MAX(t1,t2) (t1 > t2 ? t1 : t2)
 #define MIN(t1,t2) (t1 < t2 ? t1 : t2)
 
+static unsigned int nodecnt = 0;
+
 static struct tree *left_rotation(struct tree *item)
 {
     struct tree *root = NULL;
@@ -120,6 +122,7 @@ struct tree *insert(struct tree *root, int element)
     {
         /* root null. need to create one */
         root = (struct tree*) malloc(sizeof(struct tree));
+        ++nodecnt;
         root->bf = 0;
         root->element = element;
         root->left = NULL; root->right = NULL;
@@ -164,6 +167,12 @@ void free_tree(struct tree *root)
     free_tree(root->left);
     free_tree(root->right);
     free(root);
+    --nodecnt;
+}
+
+unsigned long memory_allocated()
+{
+    return nodecnt * sizeof(struct tree);
 }
 
 /* returns non-zero value if found. else return 0 */

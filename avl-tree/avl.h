@@ -43,4 +43,7 @@ void free_tree(struct tree *root);
 /* return non-zero when element found */
 int lookup(struct tree *root, int element);
 
+/* returns the number of bytes allocated for the tree */
+unsigned long memory_allocated();
+
 #endif
