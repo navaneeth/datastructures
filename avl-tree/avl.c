@@ -175,16 +175,25 @@ unsigned long memory_allocated()
     return nodecnt * sizeof(struct tree);
 }
 
-/* returns non-zero value if found. else return 0 */
-int lookup(struct tree *root, int element)
+/* lookup the element in the tree.  */
+/* return 0 if element not found. */
+/* return number of iterations when element found */
+unsigned int lookup(struct tree *root, int element)
 {
-    if(root == NULL)
-        return 0;
-    else if(element < root->element)
-        return lookup(root->left, element);
-    else if(element > root->element)
-        return lookup(root->right, element);       
-    else
-        return 1;
+    unsigned int it = 1, result = 0;
+
+    if(root != NULL)
+    {
+        if(element == root->element)
+            return it;
+        else if(element < root->element) 
+            result = lookup(root->left, element);    
+        else if(element > root->element) 
+            result = lookup(root->right, element);
+        else
+            return 0;
+    }
+
+    return result == 0 ? result : (it + result);
 }
 

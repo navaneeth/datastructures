@@ -32,6 +32,7 @@ static void printtree(struct tree *t, unsigned int depth)
 void example1(void)
 {
     struct tree *root = NULL;
+    unsigned int it;
     
     printf("Creating simple tree with 7 elements\n");    
     root = insert(root, 'C');
@@ -43,12 +44,18 @@ void example1(void)
     root = insert(root, 'W');
     tree_iterate(root, printtree);
     printf("Created 7 elements with %lu bytes memory usage\n", memory_allocated());
+    printf("Finding element : W\n");
+    it = lookup(root, 'W');
+    if(it) {
+        printf("Found 'W' in %d iterations\n", it);
+    }
     free_tree(root);
 }
 
 void example2(void)
 {
-    int limit = 50000, i;
+    int limit = 500, i;
+    unsigned int it;
     struct tree *root = NULL;
 
     printf("Creating tree with %d elements\n", limit);
@@ -57,9 +64,10 @@ void example2(void)
     }
     printf("Created %d elements with %lu bytes memory usage\n", i, memory_allocated());
 
-    printf("Finding element : 49999 - ");
-    if(lookup(root, 49999)) {
-        printf("Found!\n");
+    printf("Finding element : 420 - ");
+    it = lookup(root, 420);
+    if(it) {
+        printf("Found in %d iterations!\n", it);
     }
     else {
         printf("Not found\n");
